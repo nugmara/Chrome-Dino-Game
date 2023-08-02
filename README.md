@@ -1,8 +1,8 @@
 # Dino Game - Game Dev
 
-[<img src="cover.png" width="80%" >](https://youtu.be/ooru4pyEv1I)
+<img src="./images/Social_dino_with_hat.gif" alt="dino-gif"/>
 
-### YouTube Tutorial:
+### YouTube Tutorial I followed:
 
 https://youtu.be/ooru4pyEv1I
 
