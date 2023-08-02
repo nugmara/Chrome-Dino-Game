@@ -1,5 +1,6 @@
 import Player from "./Player.js";
 import Ground from "./Ground.js";
+import CactiController from "./CactiController.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -16,10 +17,16 @@ const MIN_JUMP_HEIGHT = 150;
 const GROUND_WIDTH = 2400;
 const GROUND_HEIGHT = 24;
 const GROUND_AND_CACTUS_SPEED = 0.5;
+const CACTI_CONFIG = [
+  { width: 48 / 1.5, height: 100 / 1.5, image: "images/cactus_1.png" },
+  { width: 98 / 1.5, height: 100 / 1.5, image: "images/cactus_2.png" },
+  { width: 68 / 1.5, height: 70 / 1.5, image: "images/cactus_3.png" },
+];
 
 // Game Objects
 let player = null;
 let ground = null;
+let cactiController = null;
 
 let scaleRatio = null;
 let previousTime = null;
@@ -49,6 +56,23 @@ function createSprites() {
     groundHeightInGame,
     GROUND_AND_CACTUS_SPEED,
     scaleRatio
+  );
+
+  const cactiImages = CACTI_CONFIG.map((cactus) => {
+    const image = new Image();
+    image.src = cactus.image;
+    return {
+      image: image,
+      width: cactus.width * scaleRatio,
+      heigh: cactus.height * scaleRatio,
+    };
+  });
+  cactiController = new CactiController(
+    ctx,
+    cactiImages,
+    scaleRatio,
+    ground,
+    GROUND_AND_CACTUS_SPEED
   );
 }
 
@@ -104,10 +128,12 @@ function gameLoop(currentTime) {
 
   // Update game objects
   ground.update(gameSpeed, frameTimeDelta);
-  player.update(gameSpeed, frameTimeDelta)
+  cactiController.update(gameSpeed, frameTimeDelta);
+  player.update(gameSpeed, frameTimeDelta);
 
   // Draw game objects
   player.draw();
+  cactiController.draw();
   ground.draw();
   requestAnimationFrame(gameLoop);
 }
