@@ -5,7 +5,8 @@ import CactiController from "./CactiController.js";
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
-const GAME_SPEED_START = 0.75; // 1.0
+
+const GAME_SPEED_START = 1; // 1.0
 const GAME_SPEED_INCREMENT = 0.00001;
 
 const GAME_WIDTH = 800;
@@ -60,6 +61,7 @@ function createSprites() {
 
   const cactiImages = CACTI_CONFIG.map((cactus) => {
     const image = new Image();
+    // image.onload = () => console.log("Cactus Image Loaded:", cactus)
     image.src = cactus.image;
     return {
       image: image,
@@ -74,13 +76,14 @@ function createSprites() {
     ground,
     GROUND_AND_CACTUS_SPEED
   );
-  console.log(cactiImages)
+  // console.log(cactiImages)
 }
 
 function setScreen() {
   scaleRatio = getScaleRatio();
   canvas.width = GAME_WIDTH * scaleRatio;
   canvas.height = GAME_HEIGHT * scaleRatio;
+  console.log("Canvas width:", canvas.width, "Canvas height:", canvas.height);
   createSprites();
 }
 
@@ -133,9 +136,9 @@ function gameLoop(currentTime) {
   player.update(gameSpeed, frameTimeDelta);
 
   // Draw game objects
-  player.draw();
-  cactiController.draw();
   ground.draw();
+  cactiController.draw();
+  player.draw();
   requestAnimationFrame(gameLoop);
 }
 

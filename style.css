@@ -23,4 +23,5 @@ body {
 
 canvas {
     border: 0.1px solid grey;
+    background: transparent;
 }
