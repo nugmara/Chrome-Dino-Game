@@ -1,8 +1,8 @@
-import Cactus from "./Cactus";
+import Cactus from "./Cactus.js";
 
 export default class CactiController {
   CACTUS_INTERVAL_MIN = 500;
-  CACTUS_INTERVAL_MAX = 200;
+  CACTUS_INTERVAL_MAX = 2000;
 
   nextCactusInterval = null;
   cacti = [];
@@ -23,6 +23,7 @@ export default class CactiController {
       this.CACTUS_INTERVAL_MAX
     );
     this.nextCactusInterval = num;
+    console.log(this.nextCactusInterval);
   }
 
   getRandomNumber(min, max) {
@@ -42,7 +43,7 @@ export default class CactiController {
       cactusImage.height,
       cactusImage.image
     );
-    this.cacti.push(cactus)
+    this.cacti.push(cactus);
   }
 
   update(gameSpeed, frameTimeDelta) {
@@ -51,7 +52,13 @@ export default class CactiController {
       this.setNextCactusTime();
     }
     this.nextCactusInterval -= frameTimeDelta;
+    this.cacti.forEach((cactus) => {
+      cactus.update(this.speed, gameSpeed, frameTimeDelta, this.scaleRatio);
+    });
+    console.log(this.cacti.length)
   }
 
-  draw() {}
+  draw() {
+    this.cacti.forEach((cactus) => cactus.draw());
+  }
 }
